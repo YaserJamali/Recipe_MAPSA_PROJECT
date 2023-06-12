@@ -3,33 +3,32 @@ package com.example.repository;
 import com.example.model.Recipe;
 import com.example.utils.JPA;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class RecipeRepo extends BaseRepo<Recipe>{
+public class RecipeRepository extends BaseRepository<Recipe> {
 
 
 
 
-    private static RecipeRepo instance;
+    private final EntityManager em;
+
+    private final EntityTransaction tr;
 
 
+    private static RecipeRepository instance;
 
-    private RecipeRepo() {
+
+    private RecipeRepository() {
+        em = JPA.getInstance().getEntityManager();
+        tr = em.getTransaction();
     }
-
-
-    public static RecipeRepo getInstance() {
-
-            if (instance == null) {
-                instance = new RecipeRepo();
-            }
-
+    public static RecipeRepository getInstance() {
+        if (instance == null) {
+            instance = new RecipeRepository();
+        }
         return instance;
     }
-
-
 
     @Override
     public Recipe save(Recipe recipe) {

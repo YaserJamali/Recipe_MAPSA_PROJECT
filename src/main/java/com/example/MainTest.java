@@ -2,7 +2,11 @@ package com.example;
 
 import com.example.model.Ingredients;
 import com.example.model.Recipe;
-import com.example.repository.RecipeRepo;
+import com.example.repository.RecipeRepository;
+import com.example.service.RecipeService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainTest {
     public static void main(String[] args) {
@@ -18,10 +22,17 @@ public class MainTest {
         Ingredients ingredient5 = new Ingredients();
         ingredient5.setName("Salt");
 
+        Set<Ingredients> ingredientsSet= new HashSet<>();
+        ingredientsSet.add(ingredient1);
+        ingredientsSet.add(ingredient2);
+        ingredientsSet.add(ingredient3);
+        ingredientsSet.add(ingredient4);
+        ingredientsSet.add(ingredient5);
+
         Recipe recipe=new Recipe();
         recipe.setCategory("Lunch")
                 .setName("Pizza")
-                .setDirections("Mexican")
+                .setCategory("Mexican")
                 .setDirections("First Add Water then .....");
         recipe.getIngredients().add(ingredient1);
         recipe.getIngredients().add(ingredient2);
@@ -30,9 +41,9 @@ public class MainTest {
         recipe.getIngredients().add(ingredient5);
 
 
-        RecipeRepo.getInstance().save(recipe);
+        System.out.println(RecipeService.getInstance().saveAction("Kalam Polo", "First Add Water then .....", "Mexican", ingredientsSet));
 
-        System.out.println(recipe.toString());
+//        System.out.println(recipe);
 
 
 

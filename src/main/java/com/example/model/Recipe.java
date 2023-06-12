@@ -1,17 +1,22 @@
 package com.example.model;
 
-import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.*;
 
 import static javax.persistence.CascadeType.PERSIST;
 
-@Entity(name = "Recipe")
+@Entity(name = "RecipeEntity")
 @Table(name = "RECIPES_TABLE")
+@NamedQueries({
+        @NamedQuery(name = "RECIPES_FIND_ALL", query = "SELECT r FROM RecipeEntity r")
+        , @NamedQuery(name = "RECIPES_FIND_ALL_BY_CATEGORY", query = "SELECT r FROM RecipeEntity r WHERE lower(r.category) = lower(:category) ")
+        })
 public class Recipe implements Serializable {
+
+    //Properties
 
     @Id()
     @Column(name = "ID_RECIPES")
@@ -27,7 +32,7 @@ public class Recipe implements Serializable {
 
 
     @Column(name = "date_time_created")
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
 
     @Column(name = "instructions_for_recipe")
     private String instructions;
@@ -39,6 +44,14 @@ public class Recipe implements Serializable {
 
     @Column(name = "directions_for_recipe")
     private String directions ;
+
+
+    //Named Queries
+
+    public static final String RECIPES_FIND_ALL = "RECIPES_FIND_ALL";
+    public static final String RECIPES_FIND_ALL_BY_CATEGORY = "RECIPES_FIND_ALL_BY_CATEGORY";
+
+
 
     //getters and setters
 
@@ -70,11 +83,11 @@ public class Recipe implements Serializable {
         return this;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Recipe setDate(LocalDateTime date) {
+    public Recipe setDate(LocalDate date) {
         this.date = date;
         return this;
     }
@@ -111,7 +124,7 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString() {
-        return "Recipe{" +
+        return "RecipeService{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +

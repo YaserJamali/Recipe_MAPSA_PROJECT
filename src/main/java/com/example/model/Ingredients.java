@@ -1,13 +1,18 @@
 package com.example.model;
 
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "IngredientsEntity")
 @Table(name = "INGREDIENTS_TABLE")
+@NamedQueries({
+        @NamedQuery(name = "INGREDIENTS_FIND_ALL", query = "SELECT i FROM IngredientsEntity i"),
+        @NamedQuery(name = "INGREDIENTS_FIND_BY_NAME", query = "SELECT i FROM IngredientsEntity i WHERE lower(i.name) like lower(:name) ")
+})
 public class Ingredients implements Serializable {
+
+    //Properties
 
     @Id()
     @Column(name = "ID_RECIPES")
@@ -17,6 +22,11 @@ public class Ingredients implements Serializable {
 
     @Column(name = "NAME_INGREDIENTS")
     private String name;
+
+    //Named Queries
+    public static final String INGREDIENTS_FIND_ALL="INGREDIENTS_FIND_ALL";
+    public static final String INGREDIENTS_FIND_BY_NAME="INGREDIENTS_FIND_BY_NAME";
+
 
 
     //getters and setters

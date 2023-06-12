@@ -1,6 +1,6 @@
 package com.example.repository;
 
-public abstract class BaseRepo<T> {
+public abstract class BaseRepository<T> {
 
     public abstract T save(T t);
 
